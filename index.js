@@ -14,8 +14,8 @@ POSSIBLE_OUTCOMES.set("paper rock", "Player Wins! The indomitable human spirit l
 POSSIBLE_OUTCOMES.set("paper paper", "It's a tie :/");
 POSSIBLE_OUTCOMES.set("paper scissors", "Computer Victory! All hail the robot overlords!");
 POSSIBLE_OUTCOMES.set("scissors rock", "Computer Victory! All hail the robot overlords!");
-POSSIBLE_OUTCOMES.set(["scissors paper"], "Player Wins! The indomitable human spirit lives on!");
-POSSIBLE_OUTCOMES.set(["scissors scissors"], "It's a tie :/");
+POSSIBLE_OUTCOMES.set("scissors paper", "Player Wins! The indomitable human spirit lives on!");
+POSSIBLE_OUTCOMES.set("scissors scissors", "It's a tie :/");
 
 // Plays a single round of RPS.
 function playRound(playerSelection, computerSelection) {
@@ -23,5 +23,3 @@ function playRound(playerSelection, computerSelection) {
   computerSelection = computerSelection.toLowerCase().trim();
   return POSSIBLE_OUTCOMES.get([playerSelection, computerSelection]);
 }
-console.log(POSSIBLE_OUTCOMES.has(["rock", "rock"]));
-console.log(playRound("rock", "paper"));
