@@ -21,5 +21,5 @@ POSSIBLE_OUTCOMES.set("scissors scissors", "It's a tie :/");
 function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase().trim();
   computerSelection = computerSelection.toLowerCase().trim();
-  return POSSIBLE_OUTCOMES.get([playerSelection, computerSelection]);
+  return POSSIBLE_OUTCOMES.get(playerSelection + " " + computerSelection);
 }
