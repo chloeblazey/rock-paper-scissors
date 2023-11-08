@@ -23,3 +23,37 @@ function playRound(playerSelection, computerSelection) {
   computerSelection = computerSelection.toLowerCase().trim();
   return POSSIBLE_OUTCOMES.get(playerSelection + " " + computerSelection);
 }
+
+// Plays a game of Rock Paper Scissor, 5 rounds.
+function game() {
+  alert("You are now playing rock paper scissors.");
+
+  const NUM_ROUNDS = 5;
+  let playerScore = 0;
+  let computerScore = 0;
+  let playerSelection;
+  let computerSelection;
+  let outcome;
+
+  for (let i = 0; i < NUM_ROUNDS; i++) {
+    alert("Let's play round " + (i+1) + ".");
+
+    // Gathers the player's input then calculates the outcome
+    playerSelection = prompt("Type your choice: rock, paper, or scissors?");
+    computerSelection = getComputerChoice();
+    outcome = playRound(playerSelection, computerSelection);
+
+    // Updates the score
+    if (outcome === "Player Wins! The indomitable human spirit lives on!") {
+      ++playerScore;
+    } else if (outcome === "Computer Victory! All hail the robot overlords!") {
+      ++computerScore;
+    }
+
+    alert("You chose: " + playerSelection + "\n" + "The computer chose: " + computerSelection);
+    alert(outcome + "\n" + "Player: " + playerScore + "    Computer: " + computerScore);
+  }
+}
+
+// Plays game
+game()
