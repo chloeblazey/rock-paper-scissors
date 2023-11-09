@@ -1,9 +1,3 @@
-// Randomly returns either rock, paper, or scissors.
-function getComputerChoice() {
-  let choices = ["rock", "paper", "scissors"];
-  return choices[Math.floor(Math.random() * 3)];
-}
-
 // Maps "player computer" choices to game outcomes.
 const POSSIBLE_OUTCOMES = new Map();
 
@@ -17,6 +11,14 @@ POSSIBLE_OUTCOMES.set("scissors rock", "Computer Victory! All hail the robot ove
 POSSIBLE_OUTCOMES.set("scissors paper", "Player Wins! The indomitable human spirit lives on!");
 POSSIBLE_OUTCOMES.set("scissors scissors", "It's a tie :/");
 
+// Initializes scores
+let playerScore = 0;
+let computerScore = 0;
+
+// Initializes a reference to the elements containing the player and computer scores
+const playerScoreContainer = document.querySelector("#player-score-container");
+const computerScoreContainer = document.querySelector("#computer-score-container");
+
 // Plays a single round of RPS.
 function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase().trim();
@@ -24,51 +26,32 @@ function playRound(playerSelection, computerSelection) {
   return POSSIBLE_OUTCOMES.get(playerSelection + " " + computerSelection);
 }
 
-// Adds event listeners to the player buttons that trigger a round of rps
+// Randomly returns either rock, paper, or scissors.
+function getComputerChoice() {
+  let choices = ["rock", "paper", "scissors"];
+  return choices[Math.floor(Math.random() * 3)];
+}
+
+// Updates the score based a string output describing the round's outcome
+// Updates the scoreboard on screen as well
+function updateScore(roundOutcome) {
+  if (roundOutcome === "Player Wins! The indomitable human spirit lives on!") {
+    ++playerScore;
+    playerScoreContainer.textContent = "Player Score: " + playerScore;
+  } else if (roundOutcome === "Computer Victory! All hail the robot overlords!") {
+    ++computerScore;
+    computerScoreContainer.textContent = "Computer Score: " + computerScore;
+  }
+}
+
+
+// Adds event listeners to the player buttons that:
+// 1. trigger a round of rps based on the player's selection
+// 2. update the game score
 const buttons = document.querySelectorAll("button");
 buttons.forEach((el) => {
     el.addEventListener("click", () => {
-      playRound(el.textContent, getComputerChoice());
+      let roundOutcome = playRound(el.textContent, getComputerChoice());
+      updateScore(roundOutcome);
     })
-  }
-);
-
-// Plays a game of Rock Paper Scissor, 5 rounds.
-function game() {
-  alert("You are now playing rock paper scissors.");
-
-  let playerScore = 0;
-  let computerScore = 0;
-  let playerSelection;
-  let computerSelection;
-  let outcome;
-
-  alert("Let's play a round.");
-
-  // Gathers the player's input then calculates the outcome
-  playerSelection = prompt("Type your choice: rock, paper, or scissors?");
-  computerSelection = getComputerChoice();
-  outcome = playRound(playerSelection, computerSelection);
-
-  // Updates the score
-  if (outcome === "Player Wins! The indomitable human spirit lives on!") {
-    ++playerScore;
-  } else if (outcome === "Computer Victory! All hail the robot overlords!") {
-    ++computerScore;
-  }
-
-  // Announces the score
-  alert("You chose: " + playerSelection + "\nThe computer chose: " + computerSelection);
-  alert(outcome + "\nPlayer: " + playerScore + "    Computer: " + computerScore);
-  
-  /* 
-  // Calculates game winner and announces final score
-  if (playerScore < computerScore) {
-    alert("Computer has won... you lose.. but you are always a winner in my heart :-)\n\nFinal Score:\nPlayer: " +  playerScore + "    Computer: " + computerScore);
-  } else if (playerScore == computerScore) {
-    alert("wowee an honest tie... no body wins.. but no body loses?\n\nFinal Score:\nPlayer: " +  playerScore + "    Computer: " + computerScore);
-  } else if (playerScore > computerScore) {
-    alert("congraulation ! you are a winner ! lets all be friends and celebrate ^_^\n\nFinal Score:\nPlayer: " +  playerScore + "    Computer: " + computerScore);
-  }
-  */
-}
+});
