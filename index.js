@@ -15,9 +15,11 @@ POSSIBLE_OUTCOMES.set("scissors scissors", "It's a tie :/");
 let playerScore = 0;
 let computerScore = 0;
 
-// Initializes a reference to the elements containing the player and computer scores
+// Initializes a reference to the elements containing the player and computer scores, as well as the elements that display the game status
 const playerScoreContainer = document.querySelector("#player-score-container");
 const computerScoreContainer = document.querySelector("#computer-score-container");
+const messageA = document.querySelector("#message-a");
+const messageB = document.querySelector("#message-b");
 
 // Plays a single round of RPS.
 function playRound(playerSelection, computerSelection) {
@@ -44,14 +46,19 @@ function updateScore(roundOutcome) {
   }
 }
 
-
 // Adds event listeners to the player buttons that:
 // 1. trigger a round of rps based on the player's selection
 // 2. update the game score
+// 3. update the game status message
 const buttons = document.querySelectorAll("button");
 buttons.forEach((el) => {
     el.addEventListener("click", () => {
-      let roundOutcome = playRound(el.textContent, getComputerChoice());
+      let computerSelection = getComputerChoice();
+      let playerSelection = el.textContent;
+      let roundOutcome = playRound(playerSelection, computerSelection);
       updateScore(roundOutcome);
+      messageA.textContent = "You played " + playerSelection + "."
+        + " The computer played " + computerSelection + ".";
+      messageB.textContent = roundOutcome;
     })
 });
