@@ -46,6 +46,11 @@ function updateScore(roundOutcome) {
   }
 }
 
+// Disables rock paper scissors buttons
+function gameOver() {
+  buttons.forEach((el) => el.disabled = true);
+}
+
 // Adds event listeners to the player buttons that:
 // 1. trigger a round of rps based on the player's selection
 // 2. update the game score
@@ -56,9 +61,17 @@ buttons.forEach((el) => {
       let computerSelection = getComputerChoice();
       let playerSelection = el.textContent;
       let roundOutcome = playRound(playerSelection, computerSelection);
+
       updateScore(roundOutcome);
+
       messageA.textContent = "You played " + playerSelection + "."
         + " The computer played " + computerSelection + ".";
-      messageB.textContent = roundOutcome;
-    })
+      if (playerScore == 5) {
+        messageB.textContent = "You win the game! Player wins!"
+        gameOver()
+      } else if (computerScore == 5) {
+        messageB.textContent = "The computer won the game! Player loses."
+        gameOver()
+      } else messageB.textContent = roundOutcome;
+    });
 });
